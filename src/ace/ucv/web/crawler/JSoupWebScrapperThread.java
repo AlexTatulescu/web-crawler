@@ -34,6 +34,8 @@ public class JSoupWebScrapperThread extends Thread {
 	}
 
 	public void parseCel() throws IOException {
+		
+		boolean alreadyInList = false;
 
 		Headphone headphone = new Headphone();
 		Price priceCel = new Price();
@@ -57,12 +59,19 @@ public class JSoupWebScrapperThread extends Thread {
 
 		for (int i = 0; i < JSoupWebScrapperStarter.headphonesList.size(); i++) {
 			if (JSoupWebScrapperStarter.headphonesList.get(i).getId().equals(headphone.getId())) {
+				alreadyInList = true;
 				JSoupWebScrapperStarter.headphonesList.get(i).addPriceInList(priceCel);
 			}
+		}
+		
+		if(alreadyInList){
+			JSoupWebScrapperStarter.headphonesList.add(headphone);
 		}
 	}
 
 	public void parseEmag() throws IOException {
+		
+		boolean alreadyInList = false;
 
 		Headphone headphone = new Headphone();
 		Price priceEmag = new Price();
@@ -89,8 +98,13 @@ public class JSoupWebScrapperThread extends Thread {
 
 		for (int i = 0; i < JSoupWebScrapperStarter.headphonesList.size(); i++) {
 			if (JSoupWebScrapperStarter.headphonesList.get(i).getId().equals(headphone.getId())) {
+				alreadyInList = true;
 				JSoupWebScrapperStarter.headphonesList.get(i).addPriceInList(priceEmag);
 			}
+		}
+		
+		if(alreadyInList){
+			JSoupWebScrapperStarter.headphonesList.add(headphone);
 		}
 
 	}
