@@ -6,35 +6,29 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import ace.ucv.peterson.PetersonTree;
-
 public class JSoupWebScrapperThread extends Thread {
 
 	private String emagLink;
 	private String celLink;
-	private PetersonTree petersonInstance;
 
-	public JSoupWebScrapperThread(String emagProduct, String celProduct, PetersonTree instance) {
+	public JSoupWebScrapperThread(String emagProduct, String celProduct) {
 		this.emagLink = emagProduct;
 		this.celLink = celProduct;
-		this.petersonInstance = instance;
 	}
 
 	public void run() {
 
-		petersonInstance.PTlock();
 		try {
 			parseCel();
 			parseEmag();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			petersonInstance.PTunlock();
 		}
 	}
 
 	public void parseCel() throws IOException {
-		
+
 		boolean alreadyInList = false;
 
 		Headphone headphone = new Headphone();
@@ -63,14 +57,14 @@ public class JSoupWebScrapperThread extends Thread {
 				JSoupWebScrapperStarter.headphonesList.get(i).addPriceInList(priceCel);
 			}
 		}
-		
-		if(alreadyInList){
+
+		if (alreadyInList == false) {
 			JSoupWebScrapperStarter.headphonesList.add(headphone);
 		}
 	}
 
 	public void parseEmag() throws IOException {
-		
+
 		boolean alreadyInList = false;
 
 		Headphone headphone = new Headphone();
@@ -102,8 +96,8 @@ public class JSoupWebScrapperThread extends Thread {
 				JSoupWebScrapperStarter.headphonesList.get(i).addPriceInList(priceEmag);
 			}
 		}
-		
-		if(alreadyInList){
+
+		if (alreadyInList == false) {
 			JSoupWebScrapperStarter.headphonesList.add(headphone);
 		}
 

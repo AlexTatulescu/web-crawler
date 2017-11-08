@@ -1,6 +1,7 @@
 package ace.ucv.web.crawler;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +9,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import ace.ucv.peterson.PetersonTree;
 
 public class JSoupWebScrapperStarter {
 
@@ -19,14 +18,13 @@ public class JSoupWebScrapperStarter {
 	public static void main(String[] args) throws IOException {
 
 		Thread[] threads = new Thread[THREADS];
-		PetersonTree instance = new PetersonTree(THREADS);
 		String emagUrl = "http://www.cel.ro/casti/";
 		String celUrl = "https://www.emag.ro/casti-pc/c";
 		List<String> celLinksList = paginationCel(celUrl);
 		List<String> emagLinksList = paginationEmag(emagUrl);
 
 		for (int i = 0; i < THREADS; i++) {
-			threads[i] = new JSoupWebScrapperThread(emagLinksList.get(i), celLinksList.get(i), instance);
+			threads[i] = new JSoupWebScrapperThread(emagLinksList.get(i), celLinksList.get(i));
 		}
 
 		for (int i = 0; i < THREADS; i++) {
